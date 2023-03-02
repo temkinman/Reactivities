@@ -9,4 +9,9 @@ public class DataContext : DbContext
 	{ }
 
 	public DbSet<Activity> Activities { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.SeedData();
+    }
 }
