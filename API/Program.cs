@@ -16,6 +16,16 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
 });
 
+builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy("CorsPolicy", policy =>
+    {
+        policy.AllowAnyMethod()
+        .AllowAnyHeader()
+        .WithOrigins("http://localhost:3000");
+    });
+});
+
 builder.Services.AddDbContext<DataContext>(options =>
     options
 
@@ -36,6 +46,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("CorsPolicy");
 
 app.UseAuthorization();
 
