@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './App.css';
+import './styles.css';
 import axios from 'axios';
 import { Header, List } from 'semantic-ui-react';
 
@@ -9,7 +9,6 @@ function App() {
   useEffect(() => {
     axios.get('https://localhost:7115/api/activities')
     .then(response => {
-      console.log(response);
       setActivities(response.data);
     })
   }, []);
