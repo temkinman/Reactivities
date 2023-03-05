@@ -1,0 +1,44 @@
+GetAllActivities
+https://localhost:7115/api/Activities
+
+GetAllActivity
+https://localhost:7115/api/Activities/296bdaf0-71af-4d7e-b6b7-cb16404eb077
+
+[Post]
+https://localhost:7115/api/Activities/
+
+prerequest script
+var moment = require("moment");
+pm.environment.set('activityDate', moment().add(14, 'days').toISOString());
+
+body
+{
+    "id": "{{$guid}}",
+    "title": "Test Create Activity",
+    "description": "Description of the test event",
+    "category": "Culture",
+    "date": "{{activityDate}}",
+    "city": "London",
+    "venue": "Tower of London"
+}
+
+edit activity
+[put]
+https://localhost:7115/api/Activities/296bdaf0-71af-4d7e-b6b7-cb16404eb077
+
+prerequest script
+var moment = require("moment");
+pm.environment.set('activityDate', moment().add(14, 'days').toISOString());
+
+{
+    "title": "Test Create Activity updated 2",
+    "description": "Description of the test event",
+    "category": "Culture",
+    "date": "{{activityDate}}",
+    "city": "London",
+    "venue": "Tower of London"
+}
+
+
+[Delete]
+https://localhost:7115/api/Activities/731bca89-1f5d-406e-afe1-41528b7465df
