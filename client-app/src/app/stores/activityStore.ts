@@ -25,8 +25,7 @@ export default class ActivityStore {
             const activities = await agent.Activities.list();
 
             activities.forEach((activity: Activity) => {
-                activity.date = activity.date.split('T')[0];
-                this.activityRegistry.set(activity.id, activity);
+                this.setActivity(activity);
             });
 
             this.setLoadingInitial(false)
@@ -41,17 +40,32 @@ export default class ActivityStore {
         this.loadingInitial = state;
     }
 
-    selectActivity = async (id: string) => {
-        this.selectedActivity = this.activityRegistry.get(id);
+    loadActivity = async (id: string) => {
+        let activity = this.getActivity(id);
+
+        if(activity){
+            this.selectedActivity = activity;
+        }
+        else {
+            this.loading = true;
+            try {
+                activity = await agent.Activities.details(id);
+                this.setActivity(activity);
+                this.setLoadingInitial(false);
+            } catch (error) {
+                console.log(error);
+                this.setLoadingInitial(false);
+            }
+        }
     }
 
-    cancelSelectActivity = () => {
-        this.selectedActivity = undefined;
+    private getActivity = (id:string) : Activity => {
+        return this.activityRegistry.get(id) as Activity;
     }
 
-    openForm = (id?: string) => {
-        id ? this.selectActivity(id) : this.cancelSelectActivity();
-        this.editMode = true;
+    private setActivity = (activity: Activity) => {
+        activity.date = activity.date.split('T')[0];
+        this.activityRegistry.set(activity.id, activity);
     }
 
     closeForm = () => {
@@ -104,11 +118,6 @@ export default class ActivityStore {
             await agent.Activities.delete(id);
             runInAction(() => {
                 this.activityRegistry.delete(id);
-                //this.activities = [...this.activities.filter(a => a.id !== id)];
-                if(this.selectedActivity?.id === id) {
-                    this.cancelSelectActivity();
-                }
-
                 this.loading = false; 
             }) 
         } catch (error) {
