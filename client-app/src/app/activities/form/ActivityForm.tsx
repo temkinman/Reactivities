@@ -1,13 +1,17 @@
 import { observer } from "mobx-react-lite";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { Button, Form, Segment } from "semantic-ui-react";
+import LoadingComponent from "../../layout/LoadingComponent";
 import { useStore } from "../../stores/store";
 
 export default observer(function ActivityForm() {
     const {activityStore} = useStore();
-    const {selectedActivity, createActivity, updateActivity, loading} = activityStore;
+    const {selectedActivity, createActivity,
+            updateActivity, loading, loadingInitial, loadActivity} = activityStore;
+    const {id} = useParams<{id: string}>();
 
-    const initialState = selectedActivity ?? {
+    const[activity, setActivity] = useState({
         id: '',
         title: '',
         category: '',
@@ -15,9 +19,12 @@ export default observer(function ActivityForm() {
         venue: '',
         date: '',
         description: ''
-    }
+    });
 
-    const[activity, setActivity] = useState(initialState);
+    useEffect(() => {
+        console.log('try to load in ActivityForm...')
+        if(id) loadActivity(id).then(activity => setActivity(activity!))
+    },  [id, loadActivity])
 
     const handleSubmit = () => {
         activity.id ? updateActivity(activity) : createActivity(activity);
@@ -26,6 +33,10 @@ export default observer(function ActivityForm() {
     const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const {name, value} = e.target;
         setActivity({...activity, [name]: value})
+    }
+
+    if(loadingInitial){
+        return <LoadingComponent content="Loading activities..."/>
     }
 
     return (
@@ -43,3 +54,7 @@ export default observer(function ActivityForm() {
         </Segment>
     );
 })
+
+function useEfect(arg0: () => void) {
+    throw new Error("Function not implemented.");
+}

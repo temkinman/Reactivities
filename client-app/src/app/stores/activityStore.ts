@@ -41,17 +41,20 @@ export default class ActivityStore {
     }
 
     loadActivity = async (id: string) => {
+        console.log('loadActivity')
         let activity = this.getActivity(id);
 
         if(activity){
             this.selectedActivity = activity;
+            return activity;
         }
         else {
             this.loading = true;
             try {
                 activity = await agent.Activities.details(id);
-                this.setActivity(activity);
+                this.setActivity(activity!);
                 this.setLoadingInitial(false);
+                return activity;
             } catch (error) {
                 console.log(error);
                 this.setLoadingInitial(false);
@@ -59,8 +62,8 @@ export default class ActivityStore {
         }
     }
 
-    private getActivity = (id:string) : Activity => {
-        return this.activityRegistry.get(id) as Activity;
+    private getActivity = (id:string) => {
+        return this.activityRegistry.get(id);
     }
 
     private setActivity = (activity: Activity) => {
