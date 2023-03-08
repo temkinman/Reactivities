@@ -23,7 +23,11 @@ export default function ActivityDetails() {
 
     useEffect(() => {
         console.log('try to load in ActivityDetails...')
-        if(id) loadActivity(id).then(activity => setActivity(activity!))
+        console.log('id: ' + id)
+        if(id) {
+            loadActivity(id).then(activity => setActivity(activity!));
+            console.log(activity);
+        }
     },  [id, loadActivity])
 
 

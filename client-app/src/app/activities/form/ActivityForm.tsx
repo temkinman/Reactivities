@@ -1,11 +1,13 @@
 import { observer } from "mobx-react-lite";
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate, Link, NavLink } from "react-router-dom";
 import { Button, Form, Segment } from "semantic-ui-react";
 import LoadingComponent from "../../layout/LoadingComponent";
 import { useStore } from "../../stores/store";
+import {v4 as uuid} from "uuid";
 
 export default observer(function ActivityForm() {
+    const navigate = useNavigate (); 
     const {activityStore} = useStore();
     const {selectedActivity, createActivity,
             updateActivity, loading, loadingInitial, loadActivity} = activityStore;
@@ -35,7 +37,19 @@ export default observer(function ActivityForm() {
     },  [id, loadActivity])
 
     const handleSubmit = () => {
-        activity.id ? updateActivity(activity) : createActivity(activity);
+        if (activity.id.length === 0) {
+            let newActivity = {
+                ...activity,
+                id: uuid()
+            }
+            console.log('newActivity id: ' + newActivity.id);
+            createActivity(newActivity)
+            .then(() => navigate(`/activities/${newActivity.id}`));
+        }
+        else {
+            updateActivity(activity)
+            .then(() => navigate(`/activities/${activity.id}`));
+        }
     }
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -57,7 +71,7 @@ export default observer(function ActivityForm() {
                 <Form.Input placeholder='City' name='city' value={activity?.city} onChange={handleInputChange} />
                 <Form.Input placeholder='Venue' name='venue' value={activity?.venue} onChange={handleInputChange} />
                 <Button loading={loading} floated='right' positive type='submit' content='Submit' />
-                <Button floated='right' type='button' content='Cancel' />
+                <Button as={NavLink} to='/activities' floated='right' type='button' content='Cancel' />
             </Form>
         </Segment>
     );
