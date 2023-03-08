@@ -11,7 +11,7 @@ export default observer(function ActivityForm() {
             updateActivity, loading, loadingInitial, loadActivity} = activityStore;
     const {id} = useParams<{id: string}>();
 
-    const[activity, setActivity] = useState({
+    const emtyActivity = {
         id: '',
         title: '',
         category: '',
@@ -19,11 +19,19 @@ export default observer(function ActivityForm() {
         venue: '',
         date: '',
         description: ''
-    });
+    }
+
+    const[activity, setActivity] = useState(emtyActivity);
 
     useEffect(() => {
         console.log('try to load in ActivityForm...')
-        if(id) loadActivity(id).then(activity => setActivity(activity!))
+        console.log('selected id: ' + selectedActivity?.id);
+        if(id) {
+            loadActivity(id).then(activity => setActivity(activity!))
+        }
+        else {
+            setActivity(emtyActivity)
+        }
     },  [id, loadActivity])
 
     const handleSubmit = () => {
@@ -35,7 +43,7 @@ export default observer(function ActivityForm() {
         setActivity({...activity, [name]: value})
     }
 
-    if(loadingInitial){
+    if(loadingInitial && id){
         return <LoadingComponent content="Loading activities..."/>
     }
 
