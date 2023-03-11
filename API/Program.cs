@@ -1,4 +1,5 @@
 using API.Extensions;
+using API.Middleware;
 using Application.Activities;
 using FluentValidation.AspNetCore;
 
@@ -21,11 +22,12 @@ var app = builder.Build();
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
+app.UseMiddleware<ExceptionMiddleware>();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
 }
 
