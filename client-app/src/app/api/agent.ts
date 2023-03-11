@@ -1,16 +1,49 @@
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
+import { toast } from "react-toastify";
 import { Activity } from "../models/activity";
+import { store } from "../stores/store";
+import { useNavigate } from "react-router-dom";
 
 axios.defaults.baseURL = 'https://localhost:7115/api';
 
+
 axios.interceptors.response.use(async response => {
-    try {
-        await sleep(1000);
-        return response;
-    }
-    catch (error) {
-        console.log(error);
-        return await Promise.reject(error);
+    //await sleep(500);
+    return response;
+}, (error: AxiosError) => {
+    
+    const {data, status} = error.response as AxiosResponse;
+
+    switch(status) {
+        case 400:
+            if (data.errors) {
+                const modalStateErrors = [];
+                for (const key in data.errors) {
+                    if (data.errors[key]) {
+                        modalStateErrors.push(data.errors[key])
+                    }
+                }
+                throw modalStateErrors.flat();
+            } else {
+                toast.error(data);
+            }
+            // toast.error('bad request')
+            break
+        case 401:  
+            toast.error('unauthorised')
+            break;
+        case 403:
+            toast.error('forbidden')
+            break;
+        case 404:
+            toast.error('not found');
+            console.log('404....')
+            break;
+        case 500:
+            console.log(data);
+            store.commonStore.setServerError(data);
+            //toast.error('server error');
+            break;
     }
 })
 
