@@ -1,17 +1,19 @@
-﻿using AutoMapper;
+﻿using Application.Core;
+using AutoMapper;
 using Domain.Entities;
 using MediatR;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Persistence.Db;
 
 namespace Application.Activities;
 
 public class Edit
 {
-    public class Command : IRequest
+    public class Command : IRequest<Result<Unit>>
     {
         public Activity Activity { get; set; }
     }
-    public class Handler : IRequestHandler<Command>
+    public class Handler : IRequestHandler<Command, Result<Unit>>
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
@@ -22,16 +24,17 @@ public class Edit
             _mapper = mapper;
         }
 
-        public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+        public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
         {
             var activity = await _context.Activities.FindAsync(request.Activity.Id);
 
-            //activity.Title = request.Activity.Title ?? activity.Title;
             _mapper.Map(request.Activity, activity);
 
-            await _context.SaveChangesAsync();
+            var result = await _context.SaveChangesAsync() > 0;
 
-            return Unit.Value;
+            if (!result) return Result<Unit>.Failure("Activity wasn't updated");
+
+            return Result<Unit>.Success(Unit.Value);
         }
     }
 }
