@@ -2,33 +2,37 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
 import { Activity } from "../models/activity";
 import { store } from "../stores/store";
-import { useNavigate } from "react-router-dom";
 
 axios.defaults.baseURL = 'https://localhost:7115/api';
-
 
 axios.interceptors.response.use(async response => {
     //await sleep(500);
     return response;
 }, (error: AxiosError) => {
-    
-    const {data, status} = error.response as AxiosResponse;
+    const {data, status, config} = error.response as AxiosResponse;
+    console.log(data)
 
     switch(status) {
         case 400:
+            if(typeof data === 'string') {
+                toast.error(data);
+            }
+
+            if (config.method === 'get' && data.errors.hasOwnProperty('id')) {
+                window.location.href = '/not-found';
+            }
             if (data.errors) {
                 const modalStateErrors = [];
                 for (const key in data.errors) {
                     if (data.errors[key]) {
+                        console.log(data.errors[key]);
                         modalStateErrors.push(data.errors[key])
                     }
                 }
-                throw modalStateErrors.flat();
-            } else {
-                toast.error(data);
+                throw modalStateErrors.flat() 
+                // console.log('result', result)
             }
-            // toast.error('bad request')
-            break
+            break;
         case 401:  
             toast.error('unauthorised')
             break;
@@ -40,9 +44,10 @@ axios.interceptors.response.use(async response => {
             console.log('404....')
             break;
         case 500:
-            console.log(data);
+            console.log('in case 500', data);
             store.commonStore.setServerError(data);
-            //toast.error('server error');
+            window.location.href = '/server-error';
+            //return redirect('/server-error');
             break;
     }
 })
