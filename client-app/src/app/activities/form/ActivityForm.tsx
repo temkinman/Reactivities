@@ -8,6 +8,9 @@ import {v4 as uuid} from "uuid";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from 'yup';
 import MyTextInput from "../../common/form/MyTextInput";
+import MyTextArea from "../../common/form/MyTextArea";
+import MySelectInput from "../../common/form/MySelectInput";
+import { categoryOptions } from "../../common/form/options/categoryOptions";
 
 export default observer(function ActivityForm() {
     const navigate = useNavigate (); 
@@ -84,9 +87,11 @@ export default observer(function ActivityForm() {
                     <Form className="ui form" onSubmit={handleSubmit} autoComplete='off'>
                         <MyTextInput name='title'
                                     placeholder="Title" />
-                        <MyTextInput name='description'
-                                    placeholder="Description" />
-                        <MyTextInput name='category'
+                        <MyTextArea name='description'
+                                    placeholder="Description"
+                                    rows={3} />
+                        <MySelectInput name='category'
+                                    options={categoryOptions}
                                     placeholder="Category" />
                         <MyTextInput name='date'
                                     placeholder="Date" />
