@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Persistence.Db;
@@ -11,9 +12,11 @@ using Persistence.Db;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230313124719_IdentityCoontext")]
+    partial class IdentityCoontext
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,100 +61,100 @@ namespace Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f892b173-da9a-43d4-8653-d4cf2556651d"),
+                            Id = new Guid("fe5583e9-c277-4a8c-9b49-743136e50dee"),
                             Category = "drinks",
                             City = "London",
-                            Date = new DateTime(2023, 1, 2, 16, 45, 55, 854, DateTimeKind.Utc).AddTicks(4747),
+                            Date = new DateTime(2023, 1, 13, 12, 47, 19, 772, DateTimeKind.Utc).AddTicks(8954),
                             Description = "Activity 2 months ago",
                             Title = "Past Activity 1",
                             Venue = "Pub"
                         },
                         new
                         {
-                            Id = new Guid("6de34304-6ab7-49c9-84bb-4ba8a0fa9f05"),
+                            Id = new Guid("2c816c22-39aa-429d-aa0d-1741c877cc65"),
                             Category = "culture",
                             City = "Paris",
-                            Date = new DateTime(2023, 2, 2, 16, 45, 55, 854, DateTimeKind.Utc).AddTicks(4758),
+                            Date = new DateTime(2023, 2, 13, 12, 47, 19, 772, DateTimeKind.Utc).AddTicks(8963),
                             Description = "Activity 1 month ago",
                             Title = "Past Activity 2",
                             Venue = "Louvre"
                         },
                         new
                         {
-                            Id = new Guid("c67701c2-92e8-45ca-ab04-538c5f95a711"),
+                            Id = new Guid("e27e820b-419a-4100-a40e-ab3578ea5ff2"),
                             Category = "culture",
                             City = "London",
-                            Date = new DateTime(2023, 4, 2, 16, 45, 55, 854, DateTimeKind.Utc).AddTicks(4763),
+                            Date = new DateTime(2023, 4, 13, 12, 47, 19, 772, DateTimeKind.Utc).AddTicks(8965),
                             Description = "Activity 1 month in future",
                             Title = "Future Activity 1",
                             Venue = "Natural History Museum"
                         },
                         new
                         {
-                            Id = new Guid("f03a6fc7-ecf7-4332-8c07-bb9949fde259"),
+                            Id = new Guid("ab6a7c91-2c22-4c1f-96b8-a15cd9349942"),
                             Category = "music",
                             City = "London",
-                            Date = new DateTime(2023, 5, 2, 16, 45, 55, 854, DateTimeKind.Utc).AddTicks(4767),
+                            Date = new DateTime(2023, 5, 13, 12, 47, 19, 772, DateTimeKind.Utc).AddTicks(8977),
                             Description = "Activity 2 months in future",
                             Title = "Future Activity 2",
                             Venue = "O2 Arena"
                         },
                         new
                         {
-                            Id = new Guid("cdc4a30d-1e68-4a82-b896-0fc775485496"),
+                            Id = new Guid("08f9348a-00ee-45de-8131-62b7d0d3e947"),
                             Category = "drinks",
                             City = "London",
-                            Date = new DateTime(2023, 6, 2, 16, 45, 55, 854, DateTimeKind.Utc).AddTicks(4770),
+                            Date = new DateTime(2023, 6, 13, 12, 47, 19, 772, DateTimeKind.Utc).AddTicks(8979),
                             Description = "Activity 3 months in future",
                             Title = "Future Activity 3",
                             Venue = "Another pub"
                         },
                         new
                         {
-                            Id = new Guid("c531332b-392f-4ff5-96e7-515732985617"),
+                            Id = new Guid("9ed7a0be-7d76-49bf-9e7b-cb2f3f29cba7"),
                             Category = "drinks",
                             City = "London",
-                            Date = new DateTime(2023, 7, 2, 16, 45, 55, 854, DateTimeKind.Utc).AddTicks(4772),
+                            Date = new DateTime(2023, 7, 13, 12, 47, 19, 772, DateTimeKind.Utc).AddTicks(8981),
                             Description = "Activity 4 months in future",
                             Title = "Future Activity 4",
                             Venue = "Yet another pub"
                         },
                         new
                         {
-                            Id = new Guid("394143f9-9b69-4f5b-8fb5-b552b1d41dc3"),
+                            Id = new Guid("64f1e3d4-e518-482e-988d-7403d95ae3a8"),
                             Category = "drinks",
                             City = "London",
-                            Date = new DateTime(2023, 8, 2, 16, 45, 55, 854, DateTimeKind.Utc).AddTicks(4775),
+                            Date = new DateTime(2023, 8, 13, 12, 47, 19, 772, DateTimeKind.Utc).AddTicks(8982),
                             Description = "Activity 5 months in future",
                             Title = "Future Activity 5",
                             Venue = "Just another pub"
                         },
                         new
                         {
-                            Id = new Guid("be4cefd3-eb84-4624-909f-a011eec20e2c"),
+                            Id = new Guid("78950545-4287-40d6-bd58-55a91cd774ab"),
                             Category = "music",
                             City = "London",
-                            Date = new DateTime(2023, 9, 2, 16, 45, 55, 854, DateTimeKind.Utc).AddTicks(4788),
+                            Date = new DateTime(2023, 9, 13, 12, 47, 19, 772, DateTimeKind.Utc).AddTicks(8984),
                             Description = "Activity 6 months in future",
                             Title = "Future Activity 6",
                             Venue = "Roundhouse Camden"
                         },
                         new
                         {
-                            Id = new Guid("00966db1-31e3-4003-affc-c27257a3e1d0"),
+                            Id = new Guid("6b3201af-8b4e-4a81-b0c2-958ff27ed565"),
                             Category = "travel",
                             City = "London",
-                            Date = new DateTime(2023, 10, 2, 16, 45, 55, 854, DateTimeKind.Utc).AddTicks(4791),
+                            Date = new DateTime(2023, 10, 13, 12, 47, 19, 772, DateTimeKind.Utc).AddTicks(8986),
                             Description = "Activity 2 months ago",
                             Title = "Future Activity 7",
                             Venue = "Somewhere on the Thames"
                         },
                         new
                         {
-                            Id = new Guid("cbf4fe24-86e5-46e8-914a-494450da5a55"),
+                            Id = new Guid("7f5fced4-25ac-4d95-8354-be781caa6f1b"),
                             Category = "film",
                             City = "London",
-                            Date = new DateTime(2023, 11, 2, 16, 45, 55, 854, DateTimeKind.Utc).AddTicks(4794),
+                            Date = new DateTime(2023, 11, 13, 12, 47, 19, 772, DateTimeKind.Utc).AddTicks(8988),
                             Description = "Activity 8 months in future",
                             Title = "Future Activity 8",
                             Venue = "Cinema"
