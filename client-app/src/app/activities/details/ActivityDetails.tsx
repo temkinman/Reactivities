@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Grid } from "semantic-ui-react";
 import LoadingComponent from "../../layout/LoadingComponent";
+import { Activity } from "../../models/activity";
 import { useStore } from "../../stores/store";
 import ActivityDetaledChat from "./ActivityDetailedChat";
 import ActivityDetaledHeader from "./ActivityDetailedHeader";
@@ -9,28 +10,26 @@ import ActivityDetailedInfo from "./ActivityDetailedInfo";
 import ActivityDetailedSidebar from "./ActivityDetailedSidebar";
 
 export default function ActivityDetails() {
-
+    console.log('ActivityDetails');
     const {activityStore} = useStore();
     const {id} = useParams<{id: string}>();
 
     const {loadActivity, loadingInitial} = activityStore;
-    
-    const[activity, setActivity] = useState({
+
+    const[activity, setActivity] = useState<Activity>({
         id: '',
         title: '',
         category: '',
         city: '',
         venue: '',
-        date: '',
+        date: null,
         description: ''
     });
 
     useEffect(() => {
         console.log('try to load in ActivityDetails...')
-        console.log('id: ' + id)
         if(id) {
             loadActivity(id).then(activity => setActivity(activity!));
-            console.log(activity);
         }
     },  [id, loadActivity])
 

@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { observer } from "mobx-react-lite";
 import React, { Fragment } from "react";
 import { Header} from "semantic-ui-react";
@@ -19,7 +20,7 @@ export default observer(function ActivityList() {
             {groupedActivities.map(([group, activities]) => (
                 <Fragment key={group}>
                     <Header sub color='teal'>
-                        {group}
+                        {format(new Date(group), 'dd MMM yyyy')}
                     </Header>
                     {activities.map( activity => (
                         <ActivityListItem
