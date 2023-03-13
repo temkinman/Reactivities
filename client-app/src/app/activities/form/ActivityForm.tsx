@@ -1,11 +1,11 @@
 import { observer } from "mobx-react-lite";
-import React, { ChangeEvent, useEffect, useState } from "react";
-import { useParams, useNavigate, Link, NavLink } from "react-router-dom";
-import { Button, FormField, Label, Segment } from "semantic-ui-react";
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate, NavLink } from "react-router-dom";
+import { Button, Header, Segment } from "semantic-ui-react";
 import LoadingComponent from "../../layout/LoadingComponent";
 import { useStore } from "../../stores/store";
 import {v4 as uuid} from "uuid";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from 'yup';
 import MyTextInput from "../../common/form/MyTextInput";
 import MyTextArea from "../../common/form/MyTextArea";
@@ -27,7 +27,7 @@ export default observer(function ActivityForm() {
         category: '',
         city: '',
         venue: '',
-        date: new Date(),
+        date: null,
         description: ''
     }
 
@@ -80,12 +80,13 @@ export default observer(function ActivityForm() {
 
     return (
         <Segment clearing>
+            <Header content="Activity Details" sub color="teal" />
             <Formik 
                 validationSchema={validationSchema}
                 enableReinitialize
                 initialValues={activity}
-                onSubmit={values =>console.log(values)}>
-                {({ handleSubmit }) => (
+                onSubmit={values => handleFormSubmit(values)}>
+                {({ handleSubmit, isValid, isSubmitting, dirty }) => (
                     <Form className="ui form" onSubmit={handleSubmit} autoComplete='off'>
                         <MyTextInput name='title'
                                     placeholder="Title" />
@@ -100,12 +101,21 @@ export default observer(function ActivityForm() {
                                     showTimeSelect
                                     timeCaption='time'
                                     dateFormat='dd MMM yyyy h:mm:ss ' />
+                        <Header content="Location Details" sub color="teal" />
                         <MyTextInput name='city'
                                     placeholder="City" />
                         <MyTextInput name='venue'
                                     placeholder="Venue" />
-                        <Button loading={loading} floated='right' positive type='submit' content='Submit' />
-                        <Button as={NavLink} to='/activities' floated='right' type='button' content='Cancel' />
+                        <Button loading={loading}
+                                disabled={isSubmitting || !dirty || !isValid}
+                                floated='right'
+                                positive type='submit'
+                                content='Submit' />
+                        <Button as={NavLink}
+                                to='/activities'
+                                floated='right'
+                                type='button'
+                                content='Cancel' />
                     </Form>
                 )}
             </Formik>
