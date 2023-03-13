@@ -1,12 +1,15 @@
 ﻿
 using Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Reflection.Emit;
 
 namespace Persistence.Db;
 
 public static class Seed
 {
-    public static void SeedData(this ModelBuilder modelBuilder)
+    public static async Task SeedData(this ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Activity>().HasData(
                 new Activity
@@ -110,5 +113,28 @@ public static class Seed
                     Venue = "Cinema",
                 }
             );
+
+        
+    }
+  
+    public static async Task SeedUserData(DataContext context, UserManager<AppUser> userManager)
+    {
+        if(!userManager.Users.Any())
+        {
+            List<AppUser> appUsers = new()
+            {
+                new AppUser { DisplayName = "Bob", UserName = "bob", Email = "bob@test.com"},
+                new AppUser { DisplayName = "Tom", UserName = "tom", Email = "tom@test.com"},
+                new AppUser { DisplayName = "Jane", UserName = "jane", Email = "jane@test.com"}
+            };
+
+            foreach (AppUser user in appUsers)
+            {
+                await userManager.CreateAsync(user, "test$user");
+            }
+
+            context.Users.AddRange(appUsers);
+            await context.SaveChangesAsync();
+        }
     }
 }
