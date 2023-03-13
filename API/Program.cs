@@ -1,7 +1,11 @@
 using API.Extensions;
 using API.Middleware;
 using Application.Activities;
+using Domain.Entities;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Identity;
+using Persistence.Db;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,11 +20,16 @@ builder.Services.AddControllers().AddFluentValidation(config =>
 builder.Services.AddEndpointsApiExplorer();
 
 builder.AddApplicationServices();
+builder.AddIdentityService();
 
 var app = builder.Build();
 
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
+using var scope = app.Services.CreateScope();
+var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+await Seed.SeedUserData(userManager);
 
 app.UseMiddleware<ExceptionMiddleware>();
 
