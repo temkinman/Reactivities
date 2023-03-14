@@ -1,0 +1,223 @@
+{
+	"info": {
+		"_postman_id": "e50de887-3732-476e-9deb-fb273fb7d4c0",
+		"name": "Activities User Authorisation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13477700"
+	},
+	"item": [
+		{
+			"name": "Login User Successful",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var moment = require(\"moment\");\r",
+							"pm.environment.set('activityDate', moment().add(14, 'days').toISOString());"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"bob@test.com\",\r\n    \"password\": \"Test$user11\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7115/api/Account/Login",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7115",
+					"path": [
+						"api",
+						"Account",
+						"Login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login User with Bad Password",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var moment = require(\"moment\");\r",
+							"pm.environment.set('activityDate', moment().add(14, 'days').toISOString());"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"bob@test.com\",\r\n    \"password\": \"2134213$user11\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7115/api/Account/Login",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7115",
+					"path": [
+						"api",
+						"Account",
+						"Login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register user successfull",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"jim@test.com\",\r\n    \"username\": \"jim\",\r\n    \"displayName\": \"James\",\r\n    \"password\": \"Test$user11\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7115/api/Account/register",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7115",
+					"path": [
+						"api",
+						"Account",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register existing user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"jim@test.com\",\r\n    \"username\": \"jim\",\r\n    \"displayName\": \"James\",\r\n    \"password\": \"Test$user11\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7115/api/Account/register",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7115",
+					"path": [
+						"api",
+						"Account",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register user with wrong password",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"jim6@test\",\r\n    \"username\": \"jim6\",\r\n    \"displayName\": \"James\",\r\n    \"password\": \"asff\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7115/api/Account/register",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7115",
+					"path": [
+						"api",
+						"Account",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get current user",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImJvYiIsIm5hbWVpZCI6IjQwMmMxZTAzLTA2NDItNDU5Mi05YjMwLWVjMzU2MzU4YzFmYSIsImVtYWlsIjoiYm9iQHRlc3QuY29tIiwibmJmIjoxNjc4ODA3MDQ2LCJleHAiOjE2Nzg4OTM0NDYsImlhdCI6MTY3ODgwNzA0Nn0.NWAVJljjEHGX94HcCpNpuJBD3SGVznpSBq7VwRpkiedJNkGt7pOvErNJeaHqxrRigtlEk6iqe1TtJzpGNT08pA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7115/api/Account/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7115",
+					"path": [
+						"api",
+						"Account",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

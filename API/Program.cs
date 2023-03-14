@@ -3,7 +3,9 @@ using API.Middleware;
 using Application.Activities;
 using Domain.Entities;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Persistence.Db;
 using System;
 
@@ -11,7 +13,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers().AddFluentValidation(config =>
+builder.Services.AddControllers(opt =>
+{
+    var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();  // every single endpoint required Authenticated
+    opt.Filters.Add(new AuthorizeFilter(policy));
+})
+    .AddFluentValidation(config =>
 {
     config.RegisterValidatorsFromAssemblyContaining<Create>();
 });
@@ -20,7 +27,7 @@ builder.Services.AddControllers().AddFluentValidation(config =>
 builder.Services.AddEndpointsApiExplorer();
 
 builder.AddApplicationServices();
-builder.AddIdentityService();
+builder.AddIdentityServices();
 
 var app = builder.Build();
 
@@ -43,6 +50,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseCors("CorsPolicy");
 
+app.UseAuthentication(); // Important: this string need to be placed before UseAuthorization
 app.UseAuthorization();
 
 app.MapControllers();

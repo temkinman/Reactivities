@@ -1,6 +1,7 @@
 ﻿using Application.Activities;
 using Application.Core;
 using Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
