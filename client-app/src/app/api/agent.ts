@@ -1,12 +1,14 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
 import { Activity } from "../models/activity";
+import { User, UserFormValues } from "../models/user";
 import { store } from "../stores/store";
 
 axios.defaults.baseURL = 'https://localhost:7115/api';
 
 axios.interceptors.response.use(async response => {
     //await sleep(500);
+    //console.log(response);
     return response;
 }, (error: AxiosError) => {
     const {data, status, config} = error.response as AxiosResponse;
@@ -69,8 +71,15 @@ const Activities = {
     delete: (id: string) => requests.del<void>(`/activities/${id}`)
 }
 
+const Account = {
+    current: () => requests.get<User>('/account'),
+    login: (user: UserFormValues) => requests.post<User>('/account/login', user),
+    register: (user: UserFormValues) => requests.post<User>('/account/register', user)
+}
+
 const agent = {
-    Activities
+    Activities,
+    Account
 }
 
 const sleep = (delay: number) => {
