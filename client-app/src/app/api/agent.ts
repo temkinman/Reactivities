@@ -6,6 +6,16 @@ import { store } from "../stores/store";
 
 axios.defaults.baseURL = 'https://localhost:7115/api';
 
+axios.interceptors.request.use( config => {
+    const token = store.commonStore.token;
+
+    if(token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
+})
+
 axios.interceptors.response.use(async response => {
     //await sleep(500);
     //console.log(response);

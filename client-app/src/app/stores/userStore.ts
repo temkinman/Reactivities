@@ -15,7 +15,7 @@ export default class UserStore {
         return !!this.user;
     }
 
-    login =async (creds: UserFormValues) => {
+    login = async (creds: UserFormValues) => {
         try {
             const user = await agent.Account.login(creds);
             store.commonStore.setToken(user.token);
@@ -30,5 +30,15 @@ export default class UserStore {
         store.commonStore.setToken(null);
         window.localStorage.removeItem("jwt");
         this.user = null;
+    }
+
+    getUser = async () => {
+        try {
+            const user = await agent.Account.current();
+            runInAction(() => this.user = user);
+        }
+        catch (error) {
+            console.log(error);
+        }
     }
 }
