@@ -123,9 +123,9 @@ public static class Seed
         {
             List<AppUser> appUsers = new()
             {
-                new AppUser { DisplayName = "Bob", UserName = "bob", Email = "bob@test.com"},
-                new AppUser { DisplayName = "Tom", UserName = "tom", Email = "tom@test.com"},
-                new AppUser { DisplayName = "Jane", UserName = "jane", Email = "jane@test.com"}
+                new AppUser { DisplayName = "Bob", UserName = "bob", Email = "bob@test.com", Bio = "Bob"},
+                new AppUser { DisplayName = "Tom", UserName = "tom", Email = "tom@test.com", Bio = "Tom"},
+                new AppUser { DisplayName = "Jane", UserName = "jane", Email = "jane@test.com", Bio = "Jane"}
             };
 
             foreach (AppUser user in appUsers)
