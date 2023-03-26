@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Container, Header, Segment, Image } from "semantic-ui-react";
 import LoginForm from "../features/users/LoginForm";
+import RegisterForm from "../features/users/RegisterForm";
 import { useStore } from "../stores/store";
 
 export default function HomePage() {
@@ -27,7 +28,7 @@ export default function HomePage() {
                         <Button onClick={() => modalStore.openModal(<LoginForm />)} size='huge' inverted>
                             Login!
                         </Button>
-                        <Button onClick={() => modalStore.openModal(<h1>Register</h1>)} size='huge' inverted>
+                        <Button onClick={() => modalStore.openModal(<RegisterForm/>)} size='huge' inverted>
                             Register!
                         </Button>
                     </>
