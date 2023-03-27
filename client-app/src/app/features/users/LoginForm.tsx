@@ -12,11 +12,12 @@ export default observer(function LoginForm() {
     return (
         <Formik 
             initialValues={{email: '', password: '', error: null}}
-            onSubmit={(values, {setErrors}) => {
+            onSubmit={(values, {setErrors, setSubmitting}) => {
                 userStore.login(values)
                 .then(() => navigate('/activities'))
                 .catch(error =>
-                setErrors({error: 'Invalid email or password'}))
+                    setErrors({error: 'Invalid email or password'}))
+                .finally(() => setSubmitting(false))
             }}
         >
             {({handleSubmit, isSubmitting, errors}) => (

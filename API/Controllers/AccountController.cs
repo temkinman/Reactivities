@@ -57,12 +57,14 @@ public class AccountController : ControllerBase
     {
         if(await _userManager.Users.AnyAsync(x => x.Email == registerDto.Email))
         {
-            return BadRequest("Email is already exists");
+            ModelState.AddModelError("email", "Email is already exists");
+            return ValidationProblem();
         }
 
         if (await _userManager.Users.AnyAsync(x => x.UserName == registerDto.UserName))
         {
-            return BadRequest("UserName is already exists");
+            ModelState.AddModelError("username", "UserName is already exists");
+            return ValidationProblem();
         }
 
         var user = new AppUser
