@@ -1,6 +1,9 @@
 ﻿using Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace Persistence.Db;
 
@@ -14,6 +17,7 @@ public class DataContext : IdentityDbContext<AppUser>
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        var userManager = this.GetService<UserManager<AppUser>>();
         base.OnModelCreating(modelBuilder);
 
         // many to many relationships
@@ -26,9 +30,9 @@ public class DataContext : IdentityDbContext<AppUser>
 
         modelBuilder.Entity<ActivityAttendee>()
             .HasOne(u => u.Activity)
-            .WithMany(a => a.Attendees)
-            .HasForeignKey(aa => aa.ActivityId);
+        .WithMany(a => a.Attendees)
+        .HasForeignKey(aa => aa.ActivityId);
 
-        modelBuilder.SeedData();
+        modelBuilder.SeedData(userManager);
     }
 }

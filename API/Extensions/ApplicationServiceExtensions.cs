@@ -28,7 +28,7 @@ public static class ApplicationServiceExtensions
             });
         });
 
-        builder.Services.AddDbContext<DataContext>(options =>
+        builder.Services.AddDbContext<DataContext>((serviceProvider, options) =>
             options
 
 #if DEBUG

@@ -1,6 +1,8 @@
 ﻿using API.Services;
 using Domain.Entities;
+using Infrastructure.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Persistence.Db;
@@ -35,7 +37,16 @@ public static class IdentityServiceExtensions
                     IssuerSigningKey = key
                 };
             });
-        
+
+        builder.Services.AddAuthorization(opt =>
+        {
+            opt.AddPolicy("IsActivityHost", policy =>
+            {
+                policy.Requirements.Add(new IsHostRequirement());
+            });
+        });
+
+        builder.Services.AddTransient<IAuthorizationHandler, IsHostRequirementHandler>();
         builder.Services.AddScoped<TokenService>();
         
         return builder;

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Persistence.Db;
@@ -11,9 +12,11 @@ using Persistence.Db;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230328185544_IsCanceledProperty")]
+    partial class IsCanceledProperty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,6 +60,118 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Activities");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("918039f9-d583-4cf6-ad8f-bd3b9025dc34"),
+                            Category = "drinks",
+                            City = "London",
+                            Date = new DateTime(2023, 1, 28, 18, 55, 44, 325, DateTimeKind.Utc).AddTicks(9016),
+                            Description = "Activity 2 months ago",
+                            IsCancelled = false,
+                            Title = "Past Activity 1",
+                            Venue = "Pub"
+                        },
+                        new
+                        {
+                            Id = new Guid("7f28bc88-cc7b-4bd1-a404-130f25e5ce3a"),
+                            Category = "culture",
+                            City = "Paris",
+                            Date = new DateTime(2023, 2, 28, 18, 55, 44, 325, DateTimeKind.Utc).AddTicks(9025),
+                            Description = "Activity 1 month ago",
+                            IsCancelled = false,
+                            Title = "Past Activity 2",
+                            Venue = "Louvre"
+                        },
+                        new
+                        {
+                            Id = new Guid("776f5bde-66e4-4668-86cd-f9312e7aea02"),
+                            Category = "culture",
+                            City = "London",
+                            Date = new DateTime(2023, 4, 28, 18, 55, 44, 325, DateTimeKind.Utc).AddTicks(9028),
+                            Description = "Activity 1 month in future",
+                            IsCancelled = false,
+                            Title = "Future Activity 1",
+                            Venue = "Natural History Museum"
+                        },
+                        new
+                        {
+                            Id = new Guid("398cba62-4b07-4c11-973a-1205db025fc0"),
+                            Category = "music",
+                            City = "London",
+                            Date = new DateTime(2023, 5, 28, 18, 55, 44, 325, DateTimeKind.Utc).AddTicks(9031),
+                            Description = "Activity 2 months in future",
+                            IsCancelled = false,
+                            Title = "Future Activity 2",
+                            Venue = "O2 Arena"
+                        },
+                        new
+                        {
+                            Id = new Guid("8ed59834-b2cf-4d38-9578-ec324037d25f"),
+                            Category = "drinks",
+                            City = "London",
+                            Date = new DateTime(2023, 6, 28, 18, 55, 44, 325, DateTimeKind.Utc).AddTicks(9044),
+                            Description = "Activity 3 months in future",
+                            IsCancelled = false,
+                            Title = "Future Activity 3",
+                            Venue = "Another pub"
+                        },
+                        new
+                        {
+                            Id = new Guid("ebb06d95-2c82-424b-8911-d47f0f4a0424"),
+                            Category = "drinks",
+                            City = "London",
+                            Date = new DateTime(2023, 7, 28, 18, 55, 44, 325, DateTimeKind.Utc).AddTicks(9046),
+                            Description = "Activity 4 months in future",
+                            IsCancelled = false,
+                            Title = "Future Activity 4",
+                            Venue = "Yet another pub"
+                        },
+                        new
+                        {
+                            Id = new Guid("bfa06c66-f1e5-4f57-9771-af732ce8c93c"),
+                            Category = "drinks",
+                            City = "London",
+                            Date = new DateTime(2023, 8, 28, 18, 55, 44, 325, DateTimeKind.Utc).AddTicks(9049),
+                            Description = "Activity 5 months in future",
+                            IsCancelled = false,
+                            Title = "Future Activity 5",
+                            Venue = "Just another pub"
+                        },
+                        new
+                        {
+                            Id = new Guid("1301565a-484b-4039-8bce-4ae2cc3342eb"),
+                            Category = "music",
+                            City = "London",
+                            Date = new DateTime(2023, 9, 28, 18, 55, 44, 325, DateTimeKind.Utc).AddTicks(9051),
+                            Description = "Activity 6 months in future",
+                            IsCancelled = false,
+                            Title = "Future Activity 6",
+                            Venue = "Roundhouse Camden"
+                        },
+                        new
+                        {
+                            Id = new Guid("1f0720d2-88a2-4af8-aed0-64521833baea"),
+                            Category = "travel",
+                            City = "London",
+                            Date = new DateTime(2023, 10, 28, 18, 55, 44, 325, DateTimeKind.Utc).AddTicks(9053),
+                            Description = "Activity 2 months ago",
+                            IsCancelled = false,
+                            Title = "Future Activity 7",
+                            Venue = "Somewhere on the Thames"
+                        },
+                        new
+                        {
+                            Id = new Guid("8a367040-95fc-4fff-875c-ec5c5354056f"),
+                            Category = "film",
+                            City = "London",
+                            Date = new DateTime(2023, 11, 28, 18, 55, 44, 325, DateTimeKind.Utc).AddTicks(9054),
+                            Description = "Activity 8 months in future",
+                            IsCancelled = false,
+                            Title = "Future Activity 8",
+                            Venue = "Cinema"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.ActivityAttendee", b =>

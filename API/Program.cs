@@ -34,9 +34,10 @@ var app = builder.Build();
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
-using var scope = app.Services.CreateScope();
+/*using var scope = app.Services.CreateScope();
 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
 await Seed.SeedUserData(userManager);
+*/
 
 app.UseMiddleware<ExceptionMiddleware>();
 
