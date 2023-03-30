@@ -26,7 +26,7 @@ public class Edit
 
         public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
         {
-            var activity = await _context.Activities.FindAsync(request.Activity.Id);
+            var activity = await _context.Activities.FindAsync(request.Activity.Id, cancellationToken);
 
             _mapper.Map(request.Activity, activity);
 
